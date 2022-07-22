@@ -2,16 +2,17 @@ package kollus.test.media.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kollus.sdk.media.KollusStorage
 import com.kollus.sdk.media.util.ErrorCodes
 import com.kollus.sdk.media.util.Utils
 import kollus.test.media.MainActivity
 import kollus.test.media.settings.KollusConstants
 import kollus.test.media.utils.LogUtil
+
 
 open class BaseFragment : Fragment(), MainActivity.OnBackPressedListener {
 
@@ -64,8 +65,8 @@ open class BaseFragment : Fragment(), MainActivity.OnBackPressedListener {
                 }
                 it.setDevice(
                     Utils.getStoragePath(mAppContext),
-                    Utils.createUUIDSHA1(mAppContext),
-                    Utils.createUUIDMD5(mAppContext),
+                    Utils.getPlayerId(mAppContext),
+                    Utils.getPlayerIdMd5(mAppContext),
                     Utils.isTablet(mAppContext)
                 )
             }

@@ -3,10 +3,13 @@ package kollus.test.media.ui.player
 import android.content.Context
 import android.text.TextUtils
 import android.view.SurfaceView
+import com.kollus.sdk.media.KollusPlayerBookmarkListener
 import com.kollus.sdk.media.KollusPlayerLMSListener
 import com.kollus.sdk.media.MediaPlayer
 import com.kollus.sdk.media.MediaPlayer.*
 import com.kollus.sdk.media.VideoWindowImpl
+import com.kollus.sdk.media.content.BandwidthItem
+import com.kollus.sdk.media.content.KollusBookmark
 import kollus.test.media.utils.LogUtil
 
 class CustomPlayer {
@@ -33,6 +36,9 @@ class CustomPlayer {
             it.setOnErrorListener(onErrorListener)
             it.setOnVideoSizeChangedListener(onVideoSizeChangedListener)
             it.setKollusPlayerLMSListener(kollusPlayerLMSListener)
+            it.setOnBufferingUpdateListener(bufferingUpdateListener)
+            it.setOnInfoListener(infoListener)
+            it.setKollusPlayerBookmarkListener(kollusPlayerBookmarkListener)
         }
     }
 
@@ -60,7 +66,7 @@ class CustomPlayer {
             } else {
                 it.setDataSourceByKey(mSourceUrl, "")
             }
-            it.stop()
+            //it.stop()
             it.prepareAsync()
         }
     }
@@ -217,5 +223,66 @@ class CustomPlayer {
 
     private val kollusPlayerLMSListener = KollusPlayerLMSListener { request, response ->
         LogUtil.d(TAG, "request : $request / response : $response")
+    }
+
+    private val bufferingUpdateListener =
+        OnBufferingUpdateListener { mediaPlayer, percent -> LogUtil.d(TAG, "onBufferingUpdate() percent : $percent")
+    }
+
+    private val infoListener = object : MediaPlayer.OnInfoListener {
+        override fun onInfo(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
+            LogUtil.d(TAG, "onInfo() i : $what , i1 : $extra")
+            return false
+        }
+
+        override fun onBufferingStart(mediaPlayer: MediaPlayer) {
+            LogUtil.d(TAG, "onBufferingStart()")
+
+        }
+
+        override fun onBufferingEnd(mediaPlayer: MediaPlayer) {
+            LogUtil.d(TAG, "onBufferingEnd()")
+
+        }
+
+        override fun onFrameDrop(mediaPlayer: MediaPlayer) {
+            LogUtil.d(TAG, "onFrameDrop()")
+
+        }
+
+        override fun onDownloadRate(mediaPlayer: MediaPlayer, i: Int) {
+            LogUtil.d(TAG, "onDownloadRate()")
+
+        }
+
+        override fun onDetectBandwidthList(mediaPlayer: MediaPlayer, list: List<BandwidthItem>) {
+            LogUtil.d(TAG, "onDetectBandwidthList()")
+
+        }
+
+        override fun onChangedBandwidth(mediaPlayer: MediaPlayer, bandwidthItem: BandwidthItem) {
+            LogUtil.d(TAG, "onChangedBandwidth()")
+
+        }
+
+        override fun onCodecInitFail(mediaPlayer: MediaPlayer, s: String) {
+
+        }
+    }
+    private val kollusPlayerBookmarkListener = object : KollusPlayerBookmarkListener {
+        override fun onBookmark(list: List<KollusBookmark>, b: Boolean) {
+            LogUtil.d(TAG, "onBookmarkInfoDetected " + list.size)
+        }
+
+        override fun onGetBookmarkError(i: Int) {
+
+        }
+
+        override fun onBookmarkUpdated(position: Int, bUpdated: Boolean) {
+            // TODO Auto-generated method stub
+            LogUtil.d(TAG, "onBookmarkUpdated position --> $position, bUpdated --> $bUpdated")
+        }
+
+        override fun onBookmarkDeleted(i: Int, b: Boolean) {}
     }
 }

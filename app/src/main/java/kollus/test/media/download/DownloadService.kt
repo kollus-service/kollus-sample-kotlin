@@ -92,8 +92,8 @@ class DownloadService : Service() {
         mDownloadList = ArrayList()
         mStorage = KollusStorage.getInstance(applicationContext)
 
-        mStorage!!.setOnKollusStorageListener(mKollusStorageListener)
-        mStorage!!.setKollusPlayerDRMListener(mKollusPlayerDRMListener)
+        mStorage!!.registerKollusStorageListener(mKollusStorageListener)
+        mStorage!!.registerKollusPlayerDRMListener(mKollusPlayerDRMListener)
         mExecutor = Executors.newFixedThreadPool(1)
         Log.d(TAG, "onCreate")
     }
@@ -105,6 +105,12 @@ class DownloadService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         //		return super.onStartCommand(intent, flags, startId);
         return START_REDELIVER_INTENT
+    }
+
+    override fun onDestroy() {
+        mStorage!!.unregisterKollusStorageListener(mKollusStorageListener)
+        mStorage!!.unregisterKollusPlayerDRMListener(mKollusPlayerDRMListener)
+        super.onDestroy()
     }
 
     private inner class LocalHandler : Handler() {

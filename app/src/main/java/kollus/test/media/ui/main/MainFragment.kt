@@ -1,13 +1,11 @@
 package kollus.test.media.ui.main
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kollus.test.media.R
-import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class MainFragment : Fragment() {
@@ -31,11 +29,9 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        message.text = "hello kotlin"
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
 }

@@ -117,6 +117,7 @@ class DownLoadFragment : BaseFragment() {
                         val mckey = "MEDIA_CONTENT_KEY"
                         try {
                             jwtUrl = CommonUtil.createUrl("CLIENT_USER_ID", mckey, true)!!
+                            jwtUrl += "&download"
                         } catch (e: NoSuchAlgorithmException) {
                             e.printStackTrace()
                         } catch (e: InvalidKeyException) {

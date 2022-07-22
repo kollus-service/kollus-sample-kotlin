@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.kollus.sdk.media.MediaPlayer
 import kollus.test.media.R
 import kollus.test.media.settings.AppConfig
+import kollus.test.media.settings.KollusConstants
 import kollus.test.media.ui.player.CustomPlayer
 import kollus.test.media.utils.CommonUtil
 import kollus.test.media.utils.LogUtil
@@ -41,7 +42,7 @@ class PlayVideoFragment : BaseFragment(), View.OnClickListener {
             mSurfaceView?.setSecure(true)
         }
 
-        mMediaPlayer = MediaPlayer(context, mStorage, 1234)
+        mMediaPlayer = MediaPlayer(context, mStorage, KollusConstants.PORT)
         mPlayer = CustomPlayer(context!!, mMediaPlayer!!, mSurfaceView!!)
 
         if (AppConfig.MODE_MAKE_JWT) {
@@ -139,8 +140,8 @@ class PlayVideoFragment : BaseFragment(), View.OnClickListener {
                 setLogText("re start")
             }
             R.id.callApp -> {
-                setLogText("re callApp")
-                //CommonUtil.startKollusApp(context, jwtUrl)
+                setLogText("call Kollus App")
+                CommonUtil.startKollusApp(context, jwtUrl)
             }
             else -> {
             }

@@ -47,8 +47,9 @@ class WebViewPlayFragment : BaseFragment(), MainActivity.OnBackPressedListener {
                     e.printStackTrace()
                 }
             }
-            it.loadUrl(url)
+            //it.loadUrl(url)
             //it.loadUrl("file:///android_asset/index.html");
+            it.loadUrl("https://v.kr.kollus.com/SrTBm4vo?");
         }
         return root
     }

@@ -1,10 +1,10 @@
 package kollus.test.media
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment;
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import kollus.test.media.ui.fragment.ContentsListFragment
 import kollus.test.media.ui.fragment.DownLoadFragment
 import kollus.test.media.ui.fragment.PlayVideoFragment

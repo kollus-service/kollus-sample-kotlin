@@ -11,9 +11,8 @@ import org.json.JSONObject
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
 import java.util.*
-import android.text.TextUtils
-
-
+import android.content.Intent
+import android.net.Uri
 
 
 class CommonUtil {
@@ -95,13 +94,13 @@ class CommonUtil {
 
             if (isSiType) {
                 playUri = String.format(
-                    "https://v.kr.kollus.com/si?jwt=%s&custom_key=%s&purge_cache",
+                    "https://v.kr.kollus.com/si?jwt=%s&custom_key=%s",
                     strToken,
                     AppConfig.CUSTOM_KEY
                 )
             } else {
                 playUri = String.format(
-                    "https://v.kr.kollus.com/s?jwt=%s&custom_key=%s&purge_cache",
+                    "https://v.kr.kollus.com/s?jwt=%s&custom_key=%s",
                     strToken,
                     AppConfig.CUSTOM_KEY
                 )
@@ -118,6 +117,34 @@ class CommonUtil {
                 e.printStackTrace()
             } finally {
                 return jObject
+            }
+        }
+
+        fun startKollusApp(context: Context) {
+            try {
+                val intent = context.packageManager.getLaunchIntentForPackage("com.kollus.media")
+                intent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
+
+        fun startKollusApp(context: Context?, url: String?) {
+            try {
+                val scheme = "kollus://path?url=$url"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(scheme))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context?.startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                context?.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + "com.kollus.media")
+                    )
+                )
             }
         }
     }
